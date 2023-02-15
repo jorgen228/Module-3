@@ -1,0 +1,12 @@
+a, button {
+  max-width: 150px;
+}
+
+.right {
+  float: right;
+}
+
+.deleteBtn {
+  position: absolute;
+
+}
