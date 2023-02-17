@@ -7,4 +7,12 @@ module.exports = {
       next();
     }
   },
+  canSeeUserDetails: function (req, res, next) {
+    if (req.user != null)
+      if (req.user.role === "Admin" || req.user.id == req.params.userId) {
+        next();
+        return;
+      }
+    res.redirect("/login");
+  },
 };
