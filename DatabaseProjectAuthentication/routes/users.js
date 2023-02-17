@@ -7,7 +7,8 @@ const { canSeeUserDetails } = require("./authMiddlewares");
 
 router.get("/:userId", canSeeUserDetails, async function (req, res, next) {
   const user = await userService.getOne(req.params.userId);
-  res.render("userDetails", { user: user });
+  const username = req.user?.username ?? 0;
+  res.render("userDetails", { user: user, username });
 });
 
 module.exports = router;

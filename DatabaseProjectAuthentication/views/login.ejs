@@ -13,7 +13,13 @@
     <link rel="stylesheet" href="/stylesheets/login.css" />
   </head>
   <body>
-		<%- include('./partials/navbar.ejs') %>
+    <%- include('./partials/navbar.ejs') %> 
+    <% if(username){%>
+    <p>You are currently logged in as the <b><%=username%></b></p>
+    <form action="/logout" method="post">
+      <button class="logout" type="submit">Sign out</button>
+    </form>
+    <%}%>
     <form action="/login/password" method="post">
       <section>
         <label for="username">Username</label>

@@ -6,10 +6,11 @@
       rel="stylesheet"
     />
     <link href="/stylesheets/rooms.css" rel="stylesheet" />
-    <link rel="stylesheet" href="/stylesheets/index.css" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
   <body>
-    <%- include('./partials/navbar.ejs') %>
+    <%- include('./partials/navbar.ejs') %> <%-
+    include('./partials/loggedInAs.ejs', {username: username}) %>
     <h2 class="p-3">Choose a room</h2>
     <div class="list-group">
       <% rooms.forEach(function(room) { %>
@@ -26,8 +27,13 @@
           Rent a room
         </button>
       </div>
-      <% }); %>
+      <% }); %> <% if (isAdmin) { %>
+      <button class="btn btn-secondary" onclick="addRoom('http\:\/\/localhost:3000\/rooms')">
+        Add a room
+      </button>
+      <% } %>
     </div>
-    <script src="../javascripts/makeReservation.js"></script>
+    <script src="/javascripts/makeReservation.js"></script>
+    <script src="/javascripts/addRooms.js"></script>
   </body>
 </html>

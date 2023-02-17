@@ -5,17 +5,24 @@ var jsonParser = bodyParser.json();
 var HotelService = require("../services/HotelService");
 var db = require("../models");
 var hotelService = new HotelService(db);
-const { checkIfAuthorized } = require("./authMiddlewares");
+const { checkIfAuthorized, isAdmin } = require("./authMiddlewares");
 
 router.get("/", async function (req, res, next) {
+  const username = req.user?.username ?? 0;
   const hotels = await hotelService.get();
-  res.render("hotels", { hotels: hotels, user: req.user });
+  res.render("hotels", { hotels: hotels, user: req.user, username });
 });
 
 router.get("/:hotelId", async function (req, res, next) {
   const userId = req.user?.id ?? 0;
+  const username = req.user?.username ?? 0;
   const hotel = await hotelService.getHotelDetails(req.params.hotelId, userId);
-  res.render("hotelDetails", { hotel: hotel, userId, user: req.user });
+  res.render("hotelDetails", {
+    hotel: hotel,
+    userId,
+    user: req.user,
+    username,
+  });
 });
 
 router.post(
@@ -33,6 +40,7 @@ router.post(
 router.post(
   "/",
   checkIfAuthorized,
+  isAdmin,
   jsonParser,
   async function (req, res, next) {
     let Name = req.body.Name;
